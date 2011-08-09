@@ -1,0 +1,39 @@
+Compile :
+edit Makefile :( for setup path to tcl library and includes
+
+Usage:
+
+load sniplet.so
+    load "sniplet" library.
+    if u want to use "package require" interface, u should
+    follows by instuction from official sites about how to create it.
+
+this library provide 2 commands: "sniplet" and "lazy":
+
+sniplet ?arglist code
+    Invoke independed code-block with argument. Like proc,
+    but it executed just in-place, w/o any namespace modifying.
+
+lazy ?arglist code
+    Invoke independed code-block with argument in moment when
+    result is needed. If U don`t ask for result, execution being omitted.
+
+"arglist" are list of varnames for pass into code-block by values
+"code" is single command or script enclosed into {}
+
+any other features may implements in tcl script via "sniplet","lazy"
+and standart commands ("apply" "foreach" in first order)
+
+ToDo:
+- improve Makefile for independed from tcl location and version
+- create tcl package for loading "sniplet" extesion via "package require"
+- modify code for execute sniplet in level #0 (now it executed in current level)
+- add support for volatile-length args and "info arguments"
+
+Sorry:
+- in current Tcl state, "lazy" and other modern functionality
+is too hard for coding.(on older tcl-version this tricks being much
+simple and short, when implemented via language internals).
+- code is deep-experimental and contains trace and debug invokes
+- !! english is not my native or prefered language !! :)
+
