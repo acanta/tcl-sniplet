@@ -1,16 +1,13 @@
-TCL_INCLUDE=-I/usr/include/tcl8.6/generic
+TCL_CONFIG=/usr/lib64/tclConfig.sh
 
-TCL_CONFIG=/usr/lib/tclConfig.sh
-STUB=/usr/lib/libtclstub8.6.a
-CFLAGS= -std=c99 -Wall -Wextra $(TCL_INCLUDE) -DUSE_TCL_STUBS -DNDEBUG
-LDLIBS=tcl8.6
+include $(TCL_CONFIG)
+
+CFLAGS= -std=c99 -Wall -Wextra -fPIC -DHAVE_UNISTD_H -DUSE_TCL_STUBS -DNDEBUG
 
 sniplet.so: sniplet.o
-	gcc -fPIC -shared -l$(LDLIBS) $? $(STUB) -o $@
+	gcc -shared $(TCL_STUB_LIB_PATH) $? -o $@
 
-#sniplet.o : sniplet.c
-
-.PHONY: clean touch vars
+.PHONY: clean touch 
 
 clean:
 	rm -f sniplet.so
@@ -22,6 +19,4 @@ touch:
 	touch -c *.h
 	touch Makefile
 
-vars:
-	@echo "CFLAGS=$(CFLAGS)"
 
